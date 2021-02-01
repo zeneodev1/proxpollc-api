@@ -1,0 +1,30 @@
+package com.zeneo.shop.persistance.entity;
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+
+@Data
+@Document
+public class Product {
+
+    @Id
+    private String id;
+
+    private String title;
+
+    private String description;
+
+    private String thumbUrl;
+
+    private List<String> Images;
+
+    private String price;
+
+    private String categoryId;
+
+    private String departmentId;
+
+}
