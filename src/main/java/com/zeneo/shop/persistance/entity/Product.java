@@ -17,7 +17,7 @@ public class Product {
 
     private String description;
 
-    private String thumbUrl;
+    private String status;
 
     private List<String> Images;
 
@@ -26,5 +26,9 @@ public class Product {
     private String categoryId;
 
     private String departmentId;
+
+    private Integer quantity;
+
+    private boolean chargeTaxes;
 
 }

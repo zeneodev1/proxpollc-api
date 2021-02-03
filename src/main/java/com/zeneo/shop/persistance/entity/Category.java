@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @Document
 public class Category {
@@ -13,8 +15,16 @@ public class Category {
 
     private String name;
 
+    private String status;
+
+    private List<String> images;
+
+    private String description;
+
     private String departmentId;
 
     private String productCount;
+
+    private String[] tags;
 
 }

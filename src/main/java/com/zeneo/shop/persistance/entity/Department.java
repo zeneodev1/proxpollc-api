@@ -19,7 +19,13 @@ public class Department {
 
     private String name;
 
-    @DBRef(lazy = true)
+    private String description;
+
+    private String status;
+
+    private List<String> images;
+
+    @DBRef
     private List<Category> categories;
 
     private Integer productCount;
