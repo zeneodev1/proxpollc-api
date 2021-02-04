@@ -1,5 +1,6 @@
 package com.zeneo.shop.controller;
 
+import com.zeneo.shop.model.FilePath;
 import com.zeneo.shop.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -13,7 +14,7 @@ import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
-@Controller
+@RestController
 @RequestMapping("/files")
 public class UploadController {
 
@@ -38,13 +39,13 @@ public class UploadController {
     }
 
     @PostMapping("upload")
-    public Mono<String> createImage(@RequestPart(name="file") Flux<FilePart> files){
-        return fileService.createImage(files).then(Mono.just("redirect:/"));
+    public Flux<FilePath> createImage(@RequestPart(name="file") Flux<FilePart> files){
+        return fileService.createImage(files).map(FilePath::new);
     }
 
     @DeleteMapping("{filename:.+}")
-    public Mono<String> deleteImage(@PathVariable String filename) {
-        return fileService.deleteImage(filename).then(Mono.just("redirect:/"));
+    public Mono<Void> deleteImage(@PathVariable String filename) {
+        return fileService.deleteImage(filename);
     }
 
 }
