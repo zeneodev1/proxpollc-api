@@ -8,6 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
+@CrossOrigin(value = { "*" })
 @RequestMapping("/departments")
 public class DepartmentController {
 

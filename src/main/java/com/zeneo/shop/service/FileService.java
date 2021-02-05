@@ -56,7 +56,6 @@ public class FileService {
                     }
                 }).log("createImage-path")
                 .map(f -> {
-                    log.info(f.getName());
                     file.transferTo(f).log("transfer-to").subscribe();
                     return f.getName();
                 }));

@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                 .securityContextRepository(serverSecurityContext)
                 .authorizeExchange()
                 .pathMatchers("/users/login", "/users/register").permitAll()
-                .pathMatchers(HttpMethod.POST, "/products", "/departments", "/categories").hasAuthority("ADMIN")
+                .pathMatchers(HttpMethod.POST, "/products", "/departments", "/categories").permitAll()
                 .anyExchange().permitAll()
                 .and().build();
     }
