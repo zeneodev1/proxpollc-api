@@ -89,15 +89,15 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable String id) {
-        productRepository.findById(id).map(product ->
+    public Mono<Object> deleteProduct(@PathVariable String id) {
+        return productRepository.findById(id).map(product ->
                 productRepository.deleteById(id)
                 .doOnNext((v) -> {
                     decreaseCategory(product.getCategoryId());
                 }).doOnNext((v) -> {
                     decreaseDepartment(product.getDepartmentId());
                 })
-        ).subscribe();
+        );
 
     }
 

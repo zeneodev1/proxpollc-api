@@ -17,7 +17,7 @@ public class Category {
 
     private String departmentId;
 
-    private String productCount;
+    private Integer productCount;
 
     private String[] tags;
 
