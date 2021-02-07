@@ -21,7 +21,11 @@ public class Product {
 
     private List<String> Images;
 
-    private String price;
+    private List<String> tags;
+
+    private Integer price;
+
+    private Integer costPerItem;
 
     private String categoryId;
 
