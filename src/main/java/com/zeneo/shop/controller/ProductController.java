@@ -30,19 +30,19 @@ public class ProductController {
 
 
     private void increaseDepartment(String id) {
-        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", 1), Department.class);
+        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", 1), Department.class).subscribe();
     }
 
     private void increaseCategory(String id) {
-        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", 1), Category.class);
+        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", 1), Category.class).subscribe();
     }
     
     private void decreaseDepartment(String id) {
-        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", -1), Department.class);
+        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", -1), Department.class).subscribe();
     }
 
     private void decreaseCategory(String id) {
-        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", -1), Category.class);
+        mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("productCount", -1), Category.class).subscribe();
     }
 
     @GetMapping("/{id}")
