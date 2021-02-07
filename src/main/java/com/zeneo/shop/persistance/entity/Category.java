@@ -15,10 +15,6 @@ public class Category {
 
     private String name;
 
-    private String status;
-
-    private List<String> images;
-
     private String description;
 
     private String departmentId;

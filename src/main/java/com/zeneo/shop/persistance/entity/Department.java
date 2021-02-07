@@ -21,13 +21,13 @@ public class Department {
 
     private String description;
 
-    private String status;
-
     private List<String> images;
 
     @DBRef
     private List<Category> categories;
 
     private Integer productCount;
+
+    private String[] tags;
 
 }
