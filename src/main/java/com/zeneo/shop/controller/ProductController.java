@@ -53,8 +53,8 @@ public class ProductController {
 
     @GetMapping()
     public Flux<Product> getProducts(@RequestParam(name = "size", defaultValue = "20", required = false) int size,
-                                     @RequestParam(name = "page", defaultValue = "1", required = false) int page) {
-        return productRepository.findAllByIdNotNull(PageRequest.of(size, page));
+                                     @RequestParam(name = "page", defaultValue = "0", required = false) int page) {
+        return productRepository.findAllByIdNotNull(PageRequest.of(page, size));
     }
 
 
