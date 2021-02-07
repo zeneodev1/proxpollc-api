@@ -6,6 +6,7 @@ import com.zeneo.shop.persistance.entity.Department;
 import com.zeneo.shop.persistance.entity.Product;
 import com.zeneo.shop.persistance.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -51,8 +52,9 @@ public class ProductController {
 
 
     @GetMapping()
-    public Flux<Product> getProducts(Pageable pageable) {
-        return productRepository.findAllByIdNotNull(pageable);
+    public Flux<Product> getProducts(@RequestParam(name = "size", defaultValue = "20", required = false) int size,
+                                     @RequestParam(name = "page", defaultValue = "0", required = false) int page) {
+        return productRepository.findAllByIdNotNull(PageRequest.of(size, page));
     }
 
 
