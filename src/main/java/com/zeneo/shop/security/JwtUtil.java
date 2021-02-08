@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.zeneo.shop.persistance.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,13 +42,15 @@ public class JwtUtil {
         return decodedJWT.getClaim(claim);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User user) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
         return JWT.create()
                 .withIssuer("auth0")
-                .withSubject(userDetails.getUsername())
+                .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 3600000))
-                .withClaim("role", new ArrayList<>(userDetails.getAuthorities()).get(0).getAuthority())
+                .withClaim("role", user.getRole())
+                .withClaim("fullName", user.getFullName())
+                .withClaim("id", user.getId())
                 .sign(algorithm);
     }
 }

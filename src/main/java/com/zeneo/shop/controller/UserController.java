@@ -5,9 +5,10 @@ import com.zeneo.shop.model.ResponseUser;
 import com.zeneo.shop.persistance.entity.User;
 import com.zeneo.shop.persistance.repository.UserRepository;
 import com.zeneo.shop.security.JwtUtil;
-import com.zeneo.shop.security.UserDetailsService;
+import com.zeneo.shop.security.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,11 +32,11 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UsersService usersService;
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = {MediaType.TEXT_PLAIN_VALUE})
     private Mono<ResponseEntity<?>> login (@RequestBody LoginRequest loginRequest) {
-        return Mono.just(loginRequest).flatMap((loginRequest1) -> userDetailsService.findByUsername(loginRequest.getEmail())
+        return Mono.just(loginRequest).flatMap((loginRequest1) -> usersService.findByUsername(loginRequest.getEmail())
                 .map((userDetails -> passwordEncoder.matches(loginRequest.getPassword(), userDetails.getPassword())
                         ? ResponseEntity.ok(jwtUtil.generateToken(userDetails))
                         : UNAUTHORIZED)))
