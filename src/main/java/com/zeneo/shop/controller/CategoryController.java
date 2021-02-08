@@ -29,7 +29,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public Flux<Category> getCategory() {
+    public Flux<Category> getCategories() {
         return categoryRepository.findAll();
     }
 
