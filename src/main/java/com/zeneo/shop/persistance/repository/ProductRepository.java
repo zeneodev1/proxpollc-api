@@ -12,5 +12,6 @@ public interface ProductRepository extends ReactiveSortingRepository<Product, St
     Flux<Product> findAllByCategoryId(String id ,final Pageable pageable);
     Flux<Product> findAllByDepartmentId(String categoryId, Pageable pageable);
     Flux<Product> findAllByIdNotNull(Pageable pageable);
-
+    Mono<Void> deleteAllByDepartmentId(String departmentId);
+    Mono<Void> deleteAllByCategoryId(String categoryId);
 }

@@ -4,6 +4,7 @@ import com.zeneo.shop.persistance.entity.Category;
 import com.zeneo.shop.persistance.entity.Department;
 import com.zeneo.shop.persistance.repository.CategoryRepository;
 import com.zeneo.shop.persistance.repository.DepartmentRepository;
+import com.zeneo.shop.persistance.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,9 @@ public class CategoryController {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping("/{id}")
     public Mono<Category> getCategory(@PathVariable String id) {
@@ -55,14 +59,18 @@ public class CategoryController {
     }
 
     @PutMapping
-    public Mono<Category> updateDepartment(@RequestBody Category category) {
+    public Mono<Category> updateCategory(@RequestBody Category category) {
         return categoryRepository.existsById(category.getId())
                 .then(categoryRepository.save(category));
     }
 
     @DeleteMapping("{id}")
-    public Mono<Void> deleteDepartment(@PathVariable String id) {
-        return categoryRepository.deleteById(id);
+    public Mono<Void> deleteCategory(@PathVariable String id) {
+        return categoryRepository
+                .deleteById(id)
+                .doOnNext(aVoid -> {
+                    productRepository.deleteAllByCategoryId(id).subscribe();
+                });
     }
 
 }

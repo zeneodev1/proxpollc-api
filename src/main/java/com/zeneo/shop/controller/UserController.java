@@ -1,5 +1,6 @@
 package com.zeneo.shop.controller;
 
+import com.zeneo.shop.model.ChangePassword;
 import com.zeneo.shop.model.LoginRequest;
 import com.zeneo.shop.model.ResponseUser;
 import com.zeneo.shop.persistance.entity.User;
@@ -23,6 +24,8 @@ public class UserController {
 
     private final static ResponseEntity<Object> UNAUTHORIZED =
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    private final static ResponseEntity<Object> OK =
+            ResponseEntity.status(HttpStatus.OK).build();
 
     @Autowired
     private UserRepository userRepository;
@@ -42,6 +45,25 @@ public class UserController {
                         : UNAUTHORIZED)))
                 .defaultIfEmpty(UNAUTHORIZED);
     }
+
+
+    @PostMapping(value = "/login")
+    private Mono<ResponseEntity<Object>> changePassword (@RequestBody ChangePassword changePassword) {
+        return Mono.just(changePassword)
+                .flatMap((loginRequest1) -> usersService.findByUsername(changePassword.getEmail())
+                    .map((user -> {
+                        boolean matched = passwordEncoder.matches(changePassword.getOldPassword(), user.getPassword());
+                        if (matched) {
+                             user.setPassword(passwordEncoder.encode(changePassword.getNewPassword()));
+                             userRepository.save(user).subscribe();
+                             return OK;
+                        } else {
+                            return UNAUTHORIZED;
+                        }
+                    })))
+                .defaultIfEmpty(UNAUTHORIZED);
+    }
+
 
     @PostMapping("/register")
     private Mono<ResponseUser> register (@RequestBody User user) {
