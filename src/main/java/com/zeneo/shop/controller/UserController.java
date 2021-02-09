@@ -47,7 +47,7 @@ public class UserController {
     }
 
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/changePassword")
     private Mono<ResponseEntity<Object>> changePassword (@RequestBody ChangePassword changePassword) {
         return Mono.just(changePassword)
                 .flatMap((loginRequest1) -> usersService.findByUsername(changePassword.getEmail())
