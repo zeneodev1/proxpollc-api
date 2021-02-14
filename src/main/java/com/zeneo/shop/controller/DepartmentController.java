@@ -28,6 +28,10 @@ public class DepartmentController {
         return departmentRepository.findById(id);
     }
 
+    @GetMapping("/name/{name}")
+    public Mono<Department> getDepartmentByName(@PathVariable("name") String name) {
+        return departmentRepository.findFirstByNameIsLike(name.replace("-", " "));
+    }
 
     @GetMapping("/{id}/categories")
     public Flux<Category> getDepartmentCategories(@PathVariable String id) {

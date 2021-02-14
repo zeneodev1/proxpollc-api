@@ -58,9 +58,35 @@ public class ProductController {
 
 
     @GetMapping()
-    public Flux<Product> getProducts(@RequestParam(name = "size", defaultValue = "20", required = false) int size,
-                                     @RequestParam(name = "page", defaultValue = "0", required = false) int page) {
-        return productRepository.findAllByIdNotNull(PageRequest.of(page, size));
+    public Flux<Product> getProducts(@RequestParam(name = "size", defaultValue = "16", required = false) int size,
+                                     @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+                                     @RequestParam(name = "dId", required = false) String dId,
+                                     @RequestParam(name = "cId", required = false) String cId,
+                                     @RequestParam(name = "min", required = false) Integer minPrice,
+                                     @RequestParam(name = "max", required = false) Integer maxPrice,
+                                     @RequestParam(name = "condition", required = false) String condition
+    ) {
+        Criteria criteria = new Criteria();
+        if (dId != null)
+            criteria.and("departmentId").is(dId);
+        if (cId != null)
+            criteria.and("categoryId").is(cId);
+        if (minPrice != null && maxPrice != null)
+            criteria.and("price").gte(minPrice).lte(maxPrice);
+        else if (maxPrice != null)
+            criteria.and("price").lte(maxPrice);
+        else if (minPrice != null)
+            criteria.and("price").gte(minPrice);
+        if (condition != null)
+            criteria.and("condition").is(condition);
+        Query query = Query.query(criteria);
+        query.with(PageRequest.of(page, size));
+        return mongoTemplate.find(query, Product.class);
+    }
+
+    @GetMapping("/count")
+    public Mono<Object> getCount() {
+        return null;
     }
 
 
