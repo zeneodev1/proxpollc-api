@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
 public interface DepartmentRepository extends ReactiveMongoRepository<Department, String> {
-    Mono<Department> findFirstByNameIsLike(String name);
+    Mono<Department> findFirstByShortCut(String name);
 }

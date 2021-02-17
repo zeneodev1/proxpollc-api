@@ -21,4 +21,5 @@ public class Category {
 
     private String[] tags;
 
+    private String shortCut;
 }

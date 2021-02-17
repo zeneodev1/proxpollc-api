@@ -90,11 +90,15 @@ public class ProductController {
     }
 
 
+    @GetMapping("/name/{id}")
+    public Mono<Product> getProductByName(@PathVariable String name) {
+        return productRepository.findFirstByShortCut(name);
+    }
+
     @GetMapping("/category/{id}")
     public Flux<Product> getProductsByCategory(@PathVariable String id, Pageable pageable) {
         return productRepository.findAllByCategoryId(id, pageable);
     }
-
 
     @GetMapping("/department/{id}")
     public Flux<Product> getProductsByDepartment(@PathVariable String id, Pageable pageable) {
@@ -104,6 +108,7 @@ public class ProductController {
 
     @PostMapping
     public Mono<Product> addProduct(@RequestBody Product product) {
+        product.setShortCut(product.getTitle().toLowerCase().replace(" ", "-"));
         return productRepository
                 .save(product)
                 .log("save product")

@@ -30,4 +30,6 @@ public class Department {
 
     private String[] tags;
 
+    private String shortCut;
+
 }

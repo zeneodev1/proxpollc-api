@@ -39,6 +39,7 @@ public class CategoryController {
 
     @PostMapping
     public Mono<Category> addCategory(@RequestBody Category category) {
+        category.setShortCut(category.getName().toLowerCase().replace(" ", "-"));
         return categoryRepository.save(category)
                 .doOnNext(category1 -> departmentRepository.findById(category1.getDepartmentId())
                 .map(department -> {
@@ -56,6 +57,11 @@ public class CategoryController {
                     }).subscribe();
                 })
                 .subscribe());
+    }
+
+    @GetMapping("/name/{short}")
+    public Mono<Category> getCategoryByName(@PathVariable("short") String name) {
+        return categoryRepository.findFirstByShortCut(name);
     }
 
     @PutMapping

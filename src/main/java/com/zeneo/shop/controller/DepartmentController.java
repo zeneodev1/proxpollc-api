@@ -28,9 +28,9 @@ public class DepartmentController {
         return departmentRepository.findById(id);
     }
 
-    @GetMapping("/name/{name}")
-    public Mono<Department> getDepartmentByName(@PathVariable("name") String name) {
-        return departmentRepository.findFirstByNameIsLike(name.replace("-", " "));
+    @GetMapping("/name/{short}")
+    public Mono<Department> getDepartmentByName(@PathVariable("short") String name) {
+        return departmentRepository.findFirstByShortCut(name);
     }
 
     @GetMapping("/{id}/categories")

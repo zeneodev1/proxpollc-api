@@ -35,4 +35,10 @@ public class Product {
 
     private boolean chargeTaxes;
 
+    private String Condition;
+
+    private String sold;
+
+    private String shortCut;
+
 }

@@ -9,4 +9,6 @@ public interface CategoryRepository extends ReactiveMongoRepository<Category, St
     
     Flux<Category> findAllByDepartmentId(String departmentId);
     Mono<Void> deleteAllByDepartmentId(String departmentId);
+    Mono<Category> findFirstByShortCut(String shortCut);
+
 }
