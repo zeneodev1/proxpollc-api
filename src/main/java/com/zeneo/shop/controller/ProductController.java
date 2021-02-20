@@ -137,7 +137,6 @@ public class ProductController {
                 }).doOnNext(product -> {
                     decreaseCategory(product.getCategoryId());
                 });
-
     }
 
 }

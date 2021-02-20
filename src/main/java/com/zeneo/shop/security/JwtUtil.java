@@ -47,7 +47,7 @@ public class JwtUtil {
         return JWT.create()
                 .withIssuer("auth0")
                 .withSubject(user.getEmail())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 3600000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 360000000))
                 .withClaim("role", user.getRole())
                 .withClaim("fullName", user.getFullName())
                 .withClaim("id", user.getId())
