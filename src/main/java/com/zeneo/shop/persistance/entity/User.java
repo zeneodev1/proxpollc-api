@@ -16,7 +16,9 @@ public class User {
     @Id
     private String id;
 
-    private String fullName;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
@@ -30,9 +32,10 @@ public class User {
         ADMIN
     }
 
-    public User(String id, String fullName, String email, String role) {
+    public User(String id, String firstName, String lastName, String email, String role) {
         this.id = id;
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.role = role;
     }

@@ -49,7 +49,8 @@ public class JwtUtil {
                 .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 360000000))
                 .withClaim("role", user.getRole())
-                .withClaim("fullName", user.getFullName())
+                .withClaim("firstName", user.getFirstName())
+                .withClaim("lastName", user.getLastName())
                 .withClaim("id", user.getId())
                 .sign(algorithm);
     }
