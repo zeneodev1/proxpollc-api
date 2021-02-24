@@ -1,21 +1,26 @@
 package com.zeneo.shop.persistance.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
 @Document
-public class CartItem {
+@Data
+@NoArgsConstructor
+public class Wish {
 
     @Id
     private String id;
 
+    private String userId;
+
     @DBRef
     private Product product;
 
-    private Integer quantity;
-
-    private String userId;
+    public Wish(String userId, Product product) {
+        this.userId = userId;
+        this.product = product;
+    }
 }

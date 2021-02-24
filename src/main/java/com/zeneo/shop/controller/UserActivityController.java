@@ -2,44 +2,55 @@ package com.zeneo.shop.controller;
 
 import com.zeneo.shop.persistance.entity.CartItem;
 import com.zeneo.shop.persistance.entity.Product;
-import com.zeneo.shop.persistance.entity.UserActivity;
+import com.zeneo.shop.persistance.entity.Wish;
+import com.zeneo.shop.persistance.repository.CartRepository;
 import com.zeneo.shop.persistance.repository.UserActivityRepository;
+import com.zeneo.shop.persistance.repository.WishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("userActivity")
 public class UserActivityController {
 
     @Autowired
-    private UserActivityRepository userActivityRepository;
+    private CartRepository cartRepository;
 
-    @GetMapping("{id}")
-    public Mono<UserActivity> getUserActivity(@PathVariable String id) {
-        return userActivityRepository
-                .findUserActivity(id)
-                .switchIfEmpty(userActivityRepository.createUserActivity(id));
-    }
+    @Autowired
+    private WishRepository wishRepository;
+
 
     @PostMapping("/{id}/wish")
-    public Mono<Void> addToWish(@PathVariable String id, @RequestBody Product product) {
-        return userActivityRepository.addToWish(product, id).then();
+    public Mono<Wish> addToWish(@PathVariable String id, @RequestBody Product product) {
+        return wishRepository.save(new Wish(id, product));
     }
 
     @PostMapping("/{id}/cart")
-    public Mono<Void> addToCart(@PathVariable String id, @RequestBody CartItem cartItem) {
-        return userActivityRepository.addToCart(cartItem, id).then();
+    public Mono<CartItem> addToCart(@PathVariable String id, @RequestBody CartItem cartItem) {
+        return cartRepository.save(cartItem);
     }
 
+    @PostMapping("/{id}/cart/all")
+    public Flux<CartItem> addAllToCart(@PathVariable String id, @RequestBody List<CartItem> cartItems) {
+        cartItems.forEach(cartItem -> {
+            cartItem.setUserId(id);
+        });
+        return cartRepository.saveAll(cartItems);
+    }
+
+
     @DeleteMapping("/{id}/wish")
-    public Mono<Void> removeFromWish(@PathVariable String id, @RequestBody Product product) {
-        return userActivityRepository.removeFromWish(product, id).then();
+    public Mono<Void> removeFromWish(@PathVariable String id, @RequestBody Wish wish) {
+        return wishRepository.delete(wish);
     }
 
     @DeleteMapping("/{id}/cart")
     public Mono<Void> removeFromCart(@PathVariable String id, @RequestBody CartItem cartItem) {
-        return userActivityRepository.removeFromCart(cartItem, id).then();
+        return cartRepository.delete(cartItem);
     }
 
 }

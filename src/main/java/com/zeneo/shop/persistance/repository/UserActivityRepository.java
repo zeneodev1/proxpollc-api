@@ -22,10 +22,10 @@ public class UserActivityRepository {
         return reactiveMongoTemplate.save(new UserActivity(userId));
     }
 
-    public Mono<UserActivity> findUserActivity(String userId) {
-        return reactiveMongoTemplate
-                .findOne(Query.query(Criteria.where("userId").is(userId)), UserActivity.class);
-    }
+//    public Mono<UserActivity> findUserActivity(String userId) {
+//        return reactiveMongoTemplate
+//                .findOne(Query.query(Criteria.where("userId").is(userId)), UserActivity.class);
+//    }
 
     public Mono<UpdateResult> addToWish(Product product, String userId) {
         Update update = new Update();
@@ -34,11 +34,9 @@ public class UserActivityRepository {
                 .updateFirst(Query.query(Criteria.where("userId").is(userId)), update, UserActivity.class);
     }
 
-    public Mono<UpdateResult> addToCart(CartItem cartItem, String userId) {
-        Update update = new Update();
-        update.addToSet("cartItems").value(cartItem);
-        return reactiveMongoTemplate
-                .updateFirst(Query.query(Criteria.where("userId").is(userId)), update, UserActivity.class);
+    public Mono<CartItem> addToCart(CartItem cartItem, String userId) {
+        cartItem.setUserId(userId);
+        return reactiveMongoTemplate.save(cartItem);
     }
 
 
