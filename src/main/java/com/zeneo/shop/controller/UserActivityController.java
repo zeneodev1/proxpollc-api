@@ -36,6 +36,7 @@ public class UserActivityController {
 
     @PostMapping("/{id}/cart")
     public Mono<CartItem> addToCart(@PathVariable String id, @RequestBody CartItem cartItem) {
+        cartItem.setUserId(id);
         return cartRepository.save(cartItem);
     }
 
