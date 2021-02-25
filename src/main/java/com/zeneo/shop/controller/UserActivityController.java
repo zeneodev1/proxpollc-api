@@ -28,6 +28,7 @@ public class UserActivityController {
         return cartRepository.findByUserId(id);
     }
 
+
     @PostMapping("/{id}/wish")
     public Mono<Wish> addToWish(@PathVariable String id, @RequestBody Product product) {
         return wishRepository.save(new Wish(id, product));
