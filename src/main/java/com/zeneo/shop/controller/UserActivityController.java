@@ -23,7 +23,7 @@ public class UserActivityController {
     @Autowired
     private WishRepository wishRepository;
 
-    @PostMapping("/{id}/wish")
+    @GetMapping("/{id}/cart")
     public Flux<CartItem> getAllCart(@PathVariable String id) {
         return cartRepository.findByUserId(id);
     }
