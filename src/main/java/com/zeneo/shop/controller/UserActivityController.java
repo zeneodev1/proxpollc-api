@@ -40,6 +40,7 @@ public class UserActivityController {
         return cartRepository.save(cartItem);
     }
 
+
     @PostMapping("/{id}/cart/all")
     public Flux<CartItem> addAllToCart(@PathVariable String id, @RequestBody List<CartItem> cartItems) {
         cartItems.forEach(cartItem -> {

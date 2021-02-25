@@ -90,8 +90,8 @@ public class ProductController {
     }
 
 
-    @GetMapping("/name/{id}")
-    public Mono<Product> getProductByName(@PathVariable String name) {
+    @GetMapping("/name/{name}")
+    public Mono<Product> getProductByName(@PathVariable("name") String name) {
         return productRepository.findFirstByShortCut(name);
     }
 
