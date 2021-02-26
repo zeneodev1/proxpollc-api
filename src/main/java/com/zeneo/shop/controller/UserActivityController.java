@@ -29,6 +29,12 @@ public class UserActivityController {
     }
 
 
+    @GetMapping("/{id}/wish")
+    public Flux<Wish> getAllWishes(@PathVariable String id) {
+        return wishRepository.findByUserId(id);
+    }
+
+
     @PostMapping("/{id}/wish")
     public Mono<Wish> addToWish(@PathVariable String id, @RequestBody Product product) {
         return wishRepository.save(new Wish(id, product));
@@ -49,6 +55,14 @@ public class UserActivityController {
         return cartRepository.saveAll(cartItems);
     }
 
+
+    @PostMapping("/{id}/wish/all")
+    public Flux<Wish> addAllToWish(@PathVariable String id, @RequestBody List<Wish> wishes) {
+        wishes.forEach(cartItem -> {
+            cartItem.setUserId(id);
+        });
+        return wishRepository.saveAll(wishes);
+    }
 
     @DeleteMapping("/{id}/wish")
     public Mono<Void> removeFromWish(@PathVariable String id, @RequestBody Wish wish) {
