@@ -65,9 +65,9 @@ public class UserActivityController {
         return wishRepository.saveAll(wishes);
     }
 
-    @DeleteMapping("/{id}/wish")
-    public Mono<Void> removeFromWish(@PathVariable String id, @RequestBody Wish wish) {
-        return wishRepository.delete(wish);
+    @DeleteMapping("/{userId}/wish/{id}")
+    public Mono<Void> removeFromWish(@PathVariable String userId, @PathVariable String id) {
+        return wishRepository.deleteById(id);
     }
 
     @DeleteMapping("/{userId}/cart/{id}")
