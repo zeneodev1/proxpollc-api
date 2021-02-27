@@ -16,6 +16,8 @@ public class Wish {
 
     private String userId;
 
+    private Integer quantity;
+
     @DBRef
     private Product product;
 
