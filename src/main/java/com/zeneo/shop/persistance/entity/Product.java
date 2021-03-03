@@ -41,4 +41,5 @@ public class Product {
 
     private String shortCut;
 
+    private ProductInformation information;
 }
