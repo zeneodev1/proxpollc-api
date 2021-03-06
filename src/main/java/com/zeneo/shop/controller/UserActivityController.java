@@ -75,4 +75,8 @@ public class UserActivityController {
         return cartRepository.deleteById(id);
     }
 
+    @DeleteMapping("/{userId}/cart/clear")
+    public Mono<Void> removeAllFromCart(@PathVariable String userId) {
+        return cartRepository.deleteAllByUserId(userId);
+    }
 }
