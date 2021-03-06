@@ -35,7 +35,7 @@ public class Product {
 
     private boolean chargeTaxes;
 
-    private String Condition;
+    private String condition;
 
     private String sold;
 
