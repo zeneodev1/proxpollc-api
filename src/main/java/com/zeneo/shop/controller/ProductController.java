@@ -83,14 +83,13 @@ public class ProductController {
         if (condition != null)
             criteria.and("condition").is(condition);
         Query query = Query.query(criteria);
-        query.with(PageRequest.of(page, size));
         Sort sort = Sort.by(sortBy);
         if (order.equals("ASC")) {
             sort.ascending();
         } else if (order.equals("DESC")) {
             sort.descending();
         }
-        query.with(sort);
+        query.with(PageRequest.of(page, size, sort));
         return mongoTemplate.find(query, Product.class);
     }
 
