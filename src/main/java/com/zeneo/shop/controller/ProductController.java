@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -64,7 +65,9 @@ public class ProductController {
                                      @RequestParam(name = "cId", required = false) String cId,
                                      @RequestParam(name = "min", required = false) Integer minPrice,
                                      @RequestParam(name = "max", required = false) Integer maxPrice,
-                                     @RequestParam(name = "condition", required = false) String condition
+                                     @RequestParam(name = "condition", required = false) String condition,
+                                     @RequestParam(name = "sortBy", required = false, defaultValue = "id") String sortBy,
+                                     @RequestParam(name = "order", required = false, defaultValue = "ASC") String order
     ) {
         Criteria criteria = new Criteria();
         if (dId != null)
@@ -81,6 +84,13 @@ public class ProductController {
             criteria.and("condition").is(condition);
         Query query = Query.query(criteria);
         query.with(PageRequest.of(page, size));
+        Sort sort = Sort.by(sortBy);
+        if (order.equals("ASC")) {
+            sort.ascending();
+        } else if (order.equals("DESC")) {
+            sort.descending();
+        }
+        query.with(sort);
         return mongoTemplate.find(query, Product.class);
     }
 
