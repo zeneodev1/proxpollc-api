@@ -116,7 +116,6 @@ public class ProductController {
         return productRepository.findAllByDepartmentId(id, pageable);
     }
 
-
     @PostMapping
     public Mono<Product> addProduct(@RequestBody Product product) {
         product.setShortCut(product.getTitle().toLowerCase().replace(" ", "-"));
