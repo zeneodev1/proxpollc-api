@@ -41,7 +41,7 @@ public class User {
     }
 
     public ResponseUser toResponseUser() {
-        return new ResponseUser(this.id, this.email);
+        return new ResponseUser(this.id, this.email, this.firstName, this.lastName);
     }
 
 }
