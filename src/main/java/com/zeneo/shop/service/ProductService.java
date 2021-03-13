@@ -15,9 +15,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 
 @Service
 public class ProductService {
@@ -52,8 +52,8 @@ public class ProductService {
     }
 
 
-    public Mono<Product> getProduct(String id) {
-        return productRepository.findById(id);
+    public Mono<ProductDetails> getProduct(String id) {
+        return productDetailsRepository.findById(id);
     }
 
 

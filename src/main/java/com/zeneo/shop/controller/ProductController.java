@@ -20,7 +20,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/{id}")
-    public Mono<Product> getProduct(@PathVariable String id) {
+    public Mono<ProductDetails> getProduct(@PathVariable String id) {
         return productService.getProduct(id);
     }
 
