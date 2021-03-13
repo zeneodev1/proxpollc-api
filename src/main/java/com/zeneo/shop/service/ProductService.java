@@ -125,9 +125,9 @@ public class ProductService {
                     }).log("increase department"));
     }
 
-    public Mono<Product> updateProduct(Product product) {
+    public Mono<ProductDetails> updateProduct(ProductDetails product) {
         return productRepository.findById(product.getId())
-                .then(productRepository.save(product));
+                .then(productDetailsRepository.save(product));
     }
 
     public Mono<Product> deleteProduct(String id) {

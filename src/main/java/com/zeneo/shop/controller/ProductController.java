@@ -66,7 +66,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public Mono<Product> updateProduct(@RequestBody Product product) {
+    public Mono<ProductDetails> updateProduct(@RequestBody ProductDetails product) {
         return productService.updateProduct(product);
     }
 
