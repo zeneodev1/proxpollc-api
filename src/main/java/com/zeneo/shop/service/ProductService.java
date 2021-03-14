@@ -126,7 +126,13 @@ public class ProductService {
     }
 
     public Mono<ProductDetails> updateProduct(ProductDetails product) {
-        return productRepository.findById(product.getId())
+        return productRepository
+                .findById(product.getId())
+                .then(mongoTemplate.save(product.getProductDescription()))
+                .map(productDescription -> {
+                    product.setProductDescription(productDescription);
+                    return product;
+                })
                 .then(productDetailsRepository.save(product));
     }
 
