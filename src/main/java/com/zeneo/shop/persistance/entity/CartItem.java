@@ -20,5 +20,4 @@ public class CartItem {
 
     private String userId;
 
-    private ShippingQuote.ShippingMode shippingMode;
 }
