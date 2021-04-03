@@ -27,6 +27,8 @@ public class Product {
 
     private Integer costPerItem;
 
+    private Integer quantity;
+
     private String categoryId;
 
     private String departmentId;
